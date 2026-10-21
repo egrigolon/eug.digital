@@ -1,0 +1,106 @@
+:root {
+  color-scheme: dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --canvas: #050706;
+  --ink: #bfbdb6;
+  --matrix: #79ff9a;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { min-height: 100%; background: var(--canvas); }
+
+body {
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: Iowan Old Style, Baskerville, "Palatino Linotype", Georgia, serif;
+}
+
+.stage {
+  position: relative;
+  display: grid;
+  min-height: 100vh;
+  min-height: 100svh;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: center;
+  justify-items: center;
+  padding: clamp(2rem, 8vh, 6rem) clamp(1.25rem, 7vw, 7rem) clamp(5rem, 12vh, 9rem);
+  isolation: isolate;
+}
+
+.circuit {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.trace, .current {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.trace { stroke: rgb(162 172 164 / 10%); stroke-width: 1; }
+.trace-long { stroke: rgb(162 172 164 / 13%); stroke-width: 1.15; }
+.trace-via { fill: var(--canvas); stroke: rgb(162 172 164 / 17%); stroke-width: 1; }
+.current { stroke-width: 1.5; }
+
+h1 {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: .01em;
+  max-width: 100%;
+  margin: -.05em 0 0;
+  color: var(--ink);
+  font-size: clamp(2.65rem, 7.5vw, 6.5rem);
+  font-weight: 700;
+  line-height: 1.22;
+  letter-spacing: -.055em;
+  text-align: center;
+  text-wrap: balance;
+  text-shadow: 0 0 2.25rem rgb(121 255 154 / 4%);
+}
+
+.line { display: block; }
+.line-last { white-space: nowrap; }
+.word-wrap { position: relative; display: inline-block; padding: 0 .08em .16em; }
+.word { color: var(--matrix); font-style: italic; font-weight: 700; }
+
+/* Damage copies occupy short slices above the whole uncut word. */
+.damage-slice {
+  position: absolute;
+  inset: 0 .08em .16em;
+  font: inherit;
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: inherit;
+  line-height: inherit;
+  color: var(--slice-color);
+  clip-path: inset(var(--slice-top) 0 calc(100% - var(--slice-bottom)) 0);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  will-change: transform;
+  text-shadow: 1px 0 0 rgb(121 255 154 / 42%), -1px 0 0 rgb(125 199 194 / 48%);
+}
+
+@media (max-width: 480px) {
+  .stage { padding-inline: 1.25rem; padding-top: 2rem; padding-bottom: 5rem; }
+  h1 { font-size: clamp(2.55rem, 11.5vw, 3rem); line-height: 1.24; letter-spacing: -.045em; }
+  .word-wrap { padding-bottom: .18em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}
